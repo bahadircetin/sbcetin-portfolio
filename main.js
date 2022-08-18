@@ -54,6 +54,49 @@ Array(200).fill().forEach(addStar);
 const spaceTexture = new THREE.TextureLoader().load('space.jpg');
 scene.background = spaceTexture;
 
+// Avatar Image
+const bahadirTexture = new THREE.TextureLoader().load('wp.jpg');
+const bahadir = new THREE.Mesh(
+  new THREE.BoxGeometry(3,3,3),
+  new THREE.MeshBasicMaterial({ map: bahadirTexture })
+);
+
+// Moon
+const moonTexture = new THREE.TextureLoader().load('moon.jpg');
+const normalTexture = new THREE.TextureLoader().load('normal.jpg');
+
+const moon = new THREE.Mesh(
+  new THREE.SphereGeometry(3, 32, 32),
+  new THREE.MeshStandardMaterial({
+    map: moonTexture,
+    normalMap: normalTexture
+  })
+);
+
+scene.add(bahadir);
+scene.add(moon);
+
+moon.position.z = 30;
+moon.position.setX(-10);
+
+
+function moveCamera(){
+  const t = document.body.getBoundingClientRect().top;
+  moon.rotation.x += 0.05;
+  moon.rotation.y += 0.075;
+  moon.rotation.z += 0.05;
+
+  bahadir.rotation.y += 0.01;
+  bahadir.rotation.z += 0.01;
+
+  camera.position.z = t * -0.01;
+  camera.position.x = t * -0.0002;
+  camera.rotation.y = t * -0.0002;
+  
+}
+
+document.body.onscroll = moveCamera
+
 function animate() {
   requestAnimationFrame(animate);
 
